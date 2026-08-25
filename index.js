@@ -56,9 +56,25 @@ client.on('interactionCreate', async (interaction) => {
 });
 
 client.once('ready', () => {
-  console.log('Ready!');
+  console.log(`✅ Bot logged in as ${client.user.tag}! Status: Ready!`);
   client.user.setPresence({ activities: [{ name: 'with fireballs 🔥', type: ActivityType.Playing }], status: 'online'});
   scheduleLeaderboards();
 });
 
-client.login(process.env.DISCORD_TOKEN);
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('❌ Unhandled Rejection:', reason);
+});
+
+process.on('uncaughtException', (err) => {
+  console.error('❌ Uncaught Exception:', err);
+});
+
+const token = process.env.DISCORD_TOKEN ? process.env.DISCORD_TOKEN.trim() : null;
+if (!token) {
+  console.error('❌ ERROR: DISCORD_TOKEN is missing or empty in Environment Variables!');
+} else {
+  console.log('🔄 Attempting Discord login...');
+  client.login(token).catch((err) => {
+    console.error('❌ DISCORD LOGIN FAILED:', err.message);
+  });
+}
