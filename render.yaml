@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: wizardbot
+    name: titan-bot
     env: node
     plan: free
     buildCommand: npm install
