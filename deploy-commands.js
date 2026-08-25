@@ -21,10 +21,13 @@ const rest = new REST({ version: '10' }).setToken(process.env.DISCORD_TOKEN);
 	try {
 		console.log('Started refreshing application (/) commands.')
 
-		await rest.put(
-			Routes.applicationGuildCommands(IDs.client, IDs.guild),
-			{ body: commands },
-		)
+		const guilds = ['1153533613195935775', '1297566791417073704'];
+		for (const guildId of guilds) {
+			await rest.put(
+				Routes.applicationGuildCommands(IDs.client, guildId),
+				{ body: commands },
+			);
+		}
 
 		console.log('Successfully reloaded application (/) commands.')
 	} catch (error) {

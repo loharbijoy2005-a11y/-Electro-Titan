@@ -1,10 +1,10 @@
 const { EmbedBuilder } = require('discord.js');
 
 const getGeneralHelp = () => new EmbedBuilder()
-    .setTitle("Guide to use wizard")
+    .setTitle("Guide to use Electro Titan")
     .setColor('#34C6EB')
     .setDescription(
-        `Wizard enables you to verify and connect your Clash of Clans account to the discord server! To get more information on a specific feature, type \`/help command\` and enter one of the subcommands below.`)
+        `Electro Titan enables you to verify and connect your Clash of Clans account to the discord server! To get more information on a specific feature, type \`/help command\` and enter one of the subcommands below.`)
     .addFields({
         name: 'Help subcommands',
         value: `<:bullet:840654524213231716> \`verification\` - How to verify your account\n`+
@@ -17,7 +17,7 @@ const getVerificationHelp = () => new EmbedBuilder()
     .setTitle("Help for verification")
     .setColor('#34C6EB')
     .setDescription(
-        `Verification allows Wizard to know you own the corresponding Clash of Clans account. A list of commands for verifying can be found below:`)
+        `Verification allows Electro Titan to know you own the corresponding Clash of Clans account. A list of commands for verifying can be found below:`)
     .addFields({
         name: '/verify <player tag> <API token>',
         value: `Your in-game tag can be found on your profile page in clash of clans and your API token is found in the in-game settings <:bullet:840654524213231716> more settings <:bullet:840654524213231716> show API token.`,
@@ -53,7 +53,7 @@ const getStatsHelp = () => new EmbedBuilder()
     .setTitle("Help for stats")
     .setColor('#34C6EB')
     .setDescription(
-        `Wizard lets you see in-game statistics of player profiles and clans. It shows whether you verified under an account, but is not necessary.`)
+        `Electro Titan lets you see in-game statistics of player profiles and clans. It shows whether you verified under an account, but is not necessary.`)
     .addFields({
         name: '/profile show <player tag>',
         value: `Displays the stats of a player with the specified tag.`,

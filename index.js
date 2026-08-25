@@ -6,7 +6,7 @@ const { scheduleLeaderboards } = require('./utils/scheduler');
 
 require('dotenv').config();
 
-console.log('🚀 Starting WizardBot initialization...');
+console.log('🚀 Starting Electro Titan initialization...');
 
 const PORT = process.env.PORT || 3000;
 http.createServer((req, res) => {
@@ -92,7 +92,7 @@ client.on('interactionCreate', async (interaction) => {
 const onReady = () => {
   console.log(`🎉 SUCCESS! Bot is ONLINE as ${client.user ? client.user.tag : 'Connected Bot'}!`);
   if (client.user) {
-    client.user.setPresence({ activities: [{ name: 'with fireballs 🔥', type: ActivityType.Playing }], status: 'online'});
+    client.user.setPresence({ activities: [{ name: 'with electric auras ⚡', type: ActivityType.Playing }], status: 'online'});
   }
   try {
     scheduleLeaderboards();
