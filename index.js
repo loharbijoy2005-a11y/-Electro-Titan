@@ -13,16 +13,17 @@ http.createServer((req, res) => {
   res.writeHead(200, { 'Content-Type': 'text/plain' });
   res.end('Electro Titan Bot is running 24/7!\n');
 }).listen(PORT, () => {
-  console.log(`Web Service keep-alive server listening on port ${PORT}`);
+  console.log(`🌐 Web Service keep-alive server listening on port ${PORT}`);
 });
 
-// Environment Variables check
-const token = process.env.DISCORD_TOKEN ? process.env.DISCORD_TOKEN.trim() : null;
+// Environment Variables check & sanitization
+const rawToken = process.env.DISCORD_TOKEN || '';
+const token = rawToken.replace(/^["']|["']$/g, '').trim();
 const mongoUri = process.env.MONGO_URI ? process.env.MONGO_URI.trim() : null;
 const clashToken = process.env.CLASH_TOKEN ? process.env.CLASH_TOKEN.trim() : null;
 
 console.log('--- Environment Check ---');
-console.log(`DISCORD_TOKEN present: ${token ? 'YES (' + token.substring(0, 10) + '...)' : '❌ NO'}`);
+console.log(`DISCORD_TOKEN present: ${token ? 'YES (Length: ' + token.length + ', Prefix: ' + token.substring(0, 10) + '...)' : '❌ NO'}`);
 console.log(`MONGO_URI present: ${mongoUri ? 'YES' : '❌ NO'}`);
 console.log(`CLASH_TOKEN present: ${clashToken ? 'YES' : '❌ NO'}`);
 console.log('-------------------------');
@@ -88,11 +89,20 @@ client.on('interactionCreate', async (interaction) => {
   }
 });
 
-client.once('ready', () => {
-  console.log(`🎉 SUCCESS! Bot is ONLINE as ${client.user.tag}!`);
-  client.user.setPresence({ activities: [{ name: 'with fireballs 🔥', type: ActivityType.Playing }], status: 'online'});
-  scheduleLeaderboards();
-});
+const onReady = () => {
+  console.log(`🎉 SUCCESS! Bot is ONLINE as ${client.user ? client.user.tag : 'Connected Bot'}!`);
+  if (client.user) {
+    client.user.setPresence({ activities: [{ name: 'with fireballs 🔥', type: ActivityType.Playing }], status: 'online'});
+  }
+  try {
+    scheduleLeaderboards();
+  } catch (err) {
+    console.error('⚠️ Leaderboard scheduling notice:', err.message);
+  }
+};
+
+client.once('ready', onReady);
+client.once('clientReady', onReady);
 
 process.on('unhandledRejection', (reason, promise) => {
   console.error('❌ Unhandled Rejection:', reason);
@@ -103,10 +113,14 @@ process.on('uncaughtException', (err) => {
 });
 
 if (!token) {
-  console.error('❌ CRITICAL: Cannot login because DISCORD_TOKEN is missing in Render Environment Variables!');
+  console.error('❌ CRITICAL: DISCORD_TOKEN environment variable is empty or missing!');
 } else {
-  console.log('🔄 Attempting Discord login with token...');
-  client.login(token).catch((err) => {
-    console.error('❌ DISCORD LOGIN FAILED REASON:', err);
-  });
+  console.log('🔄 Initiating Discord WebSocket connection...');
+  client.login(token)
+    .then((resToken) => {
+      console.log('🟢 client.login() resolved successfully! Bot connected to Gateway.');
+    })
+    .catch((err) => {
+      console.error('❌ DISCORD LOGIN FAILED WITH ERROR:', err);
+    });
 }
