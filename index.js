@@ -1,9 +1,18 @@
-const { Collection, ActivityType } = require('discord.js');
+const http = require('http');
 const fs = require('fs');
-const client = require('./utils/client')
-const { scheduleLeaderboards } = require('./utils/scheduler')
+const { Collection, ActivityType } = require('discord.js');
+const client = require('./utils/client');
+const { scheduleLeaderboards } = require('./utils/scheduler');
 
 require('dotenv').config();
+
+const PORT = process.env.PORT || 3000;
+http.createServer((req, res) => {
+  res.writeHead(200, { 'Content-Type': 'text/plain' });
+  res.end('WizardBot is running!\n');
+}).listen(PORT, () => {
+  console.log(`Web Service server listening on port ${PORT}`);
+});
 
 client.commands = new Collection();
 
@@ -48,8 +57,8 @@ client.on('interactionCreate', async (interaction) => {
 
 client.once('ready', () => {
   console.log('Ready!');
-  client.user.setPresence({ activities: [{ name: 'with fireballs 🔥', type: ActivityType.Playing }], status: 'online'})
-  scheduleLeaderboards()
+  client.user.setPresence({ activities: [{ name: 'with fireballs 🔥', type: ActivityType.Playing }], status: 'online'});
+  scheduleLeaderboards();
 });
 
 client.login(process.env.DISCORD_TOKEN);

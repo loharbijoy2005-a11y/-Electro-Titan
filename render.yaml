@@ -1,5 +1,5 @@
 services:
-  - type: worker
+  - type: web
     name: wizardbot
     env: node
     buildCommand: npm install
