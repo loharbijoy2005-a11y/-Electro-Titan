@@ -1,0 +1,14 @@
+services:
+  - type: worker
+    name: wizardbot
+    env: node
+    buildCommand: npm install
+    startCommand: node index.js
+    autoDeploy: true
+    envVars:
+      - key: DISCORD_TOKEN
+        sync: false
+      - key: CLASH_TOKEN
+        sync: false
+      - key: MONGO_URI
+        sync: false
