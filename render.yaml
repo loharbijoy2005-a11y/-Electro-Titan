@@ -2,6 +2,7 @@ services:
   - type: web
     name: wizardbot
     env: node
+    plan: free
     buildCommand: npm install
     startCommand: node index.js
     autoDeploy: true
