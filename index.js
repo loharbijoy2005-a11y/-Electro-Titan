@@ -11,9 +11,9 @@ console.log('🚀 Starting WizardBot initialization...');
 const PORT = process.env.PORT || 3000;
 http.createServer((req, res) => {
   res.writeHead(200, { 'Content-Type': 'text/plain' });
-  res.end('WizardBot is running!\n');
+  res.end('Electro Titan Bot is running 24/7!\n');
 }).listen(PORT, () => {
-  console.log(`🌐 Web Service keep-alive server listening on port ${PORT}`);
+  console.log(`Web Service keep-alive server listening on port ${PORT}`);
 });
 
 // Environment Variables check
