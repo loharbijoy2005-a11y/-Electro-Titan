@@ -4,6 +4,7 @@
   "description": "Bot for stat tracking clash of clans",
   "main": "index.js",
   "scripts": {
+    "prestart": "node -e \"const fs=require('fs'); if (!fs.existsSync('config.json') && fs.existsSync('config.json.copy')) fs.copyFileSync('config.json.copy', 'config.json');\"",
     "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
